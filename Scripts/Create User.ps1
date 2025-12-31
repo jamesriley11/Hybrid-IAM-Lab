@@ -1,6 +1,7 @@
 ﻿<#
 .SYNOPSIS
-    GUI-based Active Directory user creation tool with username generation, department assignment, and temp password generation.
+    GUI-based Active Directory user creation tool with username generation, department assignment, 
+    and temp password generation.
 
 .DESCRIPTION
     Allows administrators to create new AD users through a simple Windows Forms GUI.
@@ -336,3 +337,4 @@ switch($msgBoxInput){
 
 $form.Controls.AddRange(@($l_firstName, $l_lastName, $l_department, $txt_firstName, $txt_lastName, $txt_altsurname, $CombDept, $RunScript, $chkAltSurname))
 [void]$form.ShowDialog() 
+
