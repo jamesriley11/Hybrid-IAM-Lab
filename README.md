@@ -13,7 +13,7 @@ This project demonstrates a hybrid identity and access management (IAM) environm
 - Automate user provisioning and security auditing with PowerShell
 
 ## Architecture
-![Architecture Diagram](architecture.png)
+![Architecture Diagram](Architecture.jpg)
 
 ## Technologies Used
 - Windows Server 2022 (Active Directory)
