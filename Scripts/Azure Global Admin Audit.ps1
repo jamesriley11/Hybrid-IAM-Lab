@@ -3,7 +3,8 @@
     Audit Global Administrators in Azure Entra ID (including PIM-eligible users) and export results to CSV log file.
 
 .DESCRIPTION
-    Connects to Microsoft Graph using certificate-based app authentication, retrieves permanent and PIM (Privileged Identity Management) eligible Global Administrators, and outputs a timestamped CSV report.
+    Connects to Microsoft Graph using certificate-based app authentication, retrieves permanent and PIM (Privileged 
+    Identity Management) eligible Global Administrators, and outputs a timestamped CSV report.
 
 .REQUIREMENTS
     - PowerShell 7+
@@ -26,7 +27,8 @@
     James Riley
 
 .NOTES
-    Placeholders for your own tenant/app/certificate information will need to be replaced, as well as a suitable output file path
+    Placeholders for your own tenant/app/certificate information will need to be replaced, as well as a 
+    suitable output file path.
 #>
 
 
@@ -87,4 +89,5 @@ $OutputPath = "C:\PATH\TO\OUTPUT\AdminAudit_$filetimestamp.csv"
 
 "Audit taken at $auditTimestamp" | Out-File -FilePath $OutputPath -Encoding utf8
 "Display Name,Email Address,Enabled,Assignment" | Out-File -FilePath $OutputPath -Append -Encoding utf8
+
 $allGlobalAdmins | ConvertTo-Csv -NoTypeInformation | Select-Object -Skip 1 | Out-File -FilePath $OutputPath -Append -Encoding utf8
