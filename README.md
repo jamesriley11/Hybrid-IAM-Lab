@@ -12,6 +12,9 @@ This project demonstrates a hybrid identity and access management (IAM) environm
 - Implement RBAC and least privilege access using Group Policy and role assignments
 - Automate user provisioning and security auditing with PowerShell
 
+## Architecture
+![Architecture Diagram](architecture.png)
+
 ## Technologies Used
 - Windows Server 2022 (Active Directory)
 - Windows 10
