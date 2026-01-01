@@ -138,8 +138,8 @@ function Generate_Username{
     [String]$firstname,
     [String]$surname
     )
-    $firstname = $firstname.ToLower() 
-    $surname = $surname.ToLower()
+    $firstname = ($firstname -replace '[\s-]', '').ToLower() 
+    $surname = ($surname -replace '[\s-]', '').ToLower()
     $candidate = "NULL"
     $max_length = 20
 
@@ -337,4 +337,5 @@ switch($msgBoxInput){
 
 $form.Controls.AddRange(@($l_firstName, $l_lastName, $l_department, $txt_firstName, $txt_lastName, $txt_altsurname, $CombDept, $RunScript, $chkAltSurname))
 [void]$form.ShowDialog() 
+
 
