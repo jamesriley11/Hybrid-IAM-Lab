@@ -23,6 +23,7 @@ This project demonstrates a hybrid identity and access management (IAM) environm
 - Conditional Access & MFA
 - SAML-based SSO
 - PowerShell
+- Windows Task Scheduler
 
 ## Key Outcomes
 - Enforced adaptive authentication based on location and risk
