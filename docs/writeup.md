@@ -1,4 +1,19 @@
 # Hybrid Identity & Access Management Lab
+## Table of Contents
+- [Overview](#overview)
+- [Architecture Overview](#architecture-overview)
+- [Identity Design & Lifecycle](#identity-design--lifecycle)
+- [Access Controls](#access-controls)
+  - [Conditional Access & MFA](#conditional-access--mfa)
+  - [SSO Implementation](#sso-implementation)
+  - [RBAC, Least Privilege and Group Policies](#rbac-least-privilege-and-group-policies)
+- [Automation & Scripting](#automation--scripting)
+  - [User Provisioning Automation](#user-provisioning-automation)
+  - [Privileged Role Auditing Automation](#privileged-role-auditing-automation)
+- [Outcomes & What This Demonstrated](#outcomes--what-this-demonstrated)
+- [Challenges, Limitations & Lessons Learned](#challenges-limitations--lessons-learned)
+- [Future Improvements](#future-improvements)
+
 
 ## Overview
 This lab is a hybrid Identity and Access Management (IAM) environment designed to simulate real-world enterprise identity architecture. It utilises Active Directory and Microsoft Entra ID for identity management, PowerShell for scripting and automation, and modern access controls including Multi-Factor Authentication (MFA), Conditional Access (CA) and SAML-based Single Sign-On (SSO). The environment reflects common enterprise IAM patterns, identity flows, and access control mechanisms.
@@ -23,7 +38,7 @@ User lifecycle events such as departmental or role changes are handled through g
 
 ## Access Controls
 ### Conditional Access & MFA
-Conditional Access (CA) and Multi-Factor Authentication (MFA) were implemented to secure access to cloud resources. MFA was configured as mandatory for all users to provide an additional authentication factor beyond username and password. The addition of Conditional Access enables adaptive authentication, rather than relying on static MFA enforcement.
+Conditional Access (CA) and Multi-Factor Authentication (MFA) were implemented to secure access to cloud resources. MFA was configured as mandatory for all users to provide an additional authentication factor beyond username and password. Conditional Access enables adaptive authentication, complementing MFA instead of relying solely on static enforcement.
 
 For testing purposes, a Conditional Access policy was created to evaluate access restrictions based on network trust and device platform. The policy aimed to block login attempts to Microsoft 365 services originating from untrusted networks, specifically targeting clients running Windows, macOS, iOS, or Android.
 
@@ -88,7 +103,7 @@ The lab reflects real-world IAM workflows and highlights the importance of secur
 
 
 ## Challenges, Limitations & Lessons Learned
-Several challenges were encountered during the implementation of this lab, primarily around identity synchronisation, permissions, and access control design. Configuring Azure AD Connect required a deeper understanding of service account permissions within Active Directory, particularly the requirement for "Replicating Directory Changes" and "Replicating Directory Changes All" permissions to enable Password Hash Synchronisation. Troubleshooting synchronisation failures highlighted the tight coupling of identity systems and the wide impact of small permission misconfigurations.
+Several challenges were encountered during the implementation of this lab, primarily around identity synchronisation, permissions, and access control design. Configuring Azure AD Connect required a deeper understanding of service account permissions within Active Directory, particularly the requirement for "Replicating Directory Changes" and "Replicating Directory Changes All" permissions to enable Password Hash Synchronisation. Troubleshooting synchronisation failures highlighted how tightly coupled identity systems are and the wide impact of small permission misconfigurations.
 
 Balancing Conditional Access and MFA policies also required careful consideration to avoid administrative lockout while still enforcing strong security controls. Policies were initially tested in report-only mode to validate behaviour before enforcement. SAML-based Single Sign-On configuration presented additional complexity, particularly around identifiers, reply URLs, and understanding the authentication flow across trust boundaries.
 
