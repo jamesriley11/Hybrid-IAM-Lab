@@ -52,8 +52,8 @@ Restricting modification of these OUs reduces the risk of excessive access being
 
 ## Automation & Scripting
 Automation was implemented to reduce manual administrative effort, improve consistency, and enhance visibility to high-risk identity operations. PowerShell was used to automate both user provisioning and privileged role auditing, reflecting common enterprise IAM automation patterns. Two primary scripts were developed:
-- [Create User](Scripts/Create%20User.ps1) - Automates secure on-premises user provisioning
-- [Global Admin Audit](Scripts/Azure%20Global%20Admin%20Audit.ps1) - Continuously audits privileged Entra ID roles
+- [Create User](../Scripts/Create%20User.ps1) - Automates secure on-premises user provisioning
+- [Global Admin Audit](../Scripts/Azure%20Global%20Admin%20Audit.ps1) - Continuously audits privileged Entra ID roles
 
 ### User Provisioning Automation
 The Create User script automates the creation of Active Directory user accounts while enforcing consistent naming standards and input validation. Usernames are generated using a structured format that ensures uniqueness, even for common surnames, while remaining compliant with the samAccountName 20-character limitation. The script also provides a GUI via Windows Forms and confirmation feedback ([user creation](Images/User_Creation.png)). Key security-focused features include:
