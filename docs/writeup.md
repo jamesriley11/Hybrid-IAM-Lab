@@ -14,7 +14,7 @@ A high-level architecture diagram is provided below to illustrate identity and a
 
 
 ## Identity Design & Lifecycle
-In this IAM environment, user identities are provisioned on-premises via an automated PowerShell user creation script [Create User](Scripts/Create%20User.ps1) and placed within a dedicated "Employees" Organisational Unit (OU) ([Active Directory Users](Images/AD_Users.png)). Client devices are domain-joined to enforce centralised identity controls, group policies, and access to domain resources. 
+In this IAM environment, user identities are provisioned on-premises via an automated PowerShell user creation script [Create User](./Scripts/Create%20User.ps1) and placed within a dedicated "Employees" Organisational Unit (OU) ([Active Directory Users](Images/AD_Users.png)). Client devices are domain-joined to enforce centralised identity controls, group policies, and access to domain resources. 
 
 Azure AD Connect is used to synchronise identities between the on-premises domain and the Entra ID tenant, with Password Hash Synchronisation (PHS) configured to enable cloud authentication. During implementation, password synchronisation initially failed due to the Entra sync service account lacking the "Replicating Directory Changes" and "Replicating Directory Changes All" permissions with Active Directory. Granting these permissions resolved the synchronisation issue and restored expected behaviour. Following successful Password Hash Synchronisation, synced users are visible within Entra ID ([Entra ID Users](Images/Azure_Users.png)).
 
