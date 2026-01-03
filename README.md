@@ -29,7 +29,9 @@ This project demonstrates a hybrid identity and access management (IAM) environm
 - Enforced adaptive authentication based on location and risk
 - Reduced manual identity administration and auditing via automation
 - Implemented least-privilege access design
-- Identified and corrected identity configuration issues during deployment and testing
+- Identified, troubleshooted, and corrected identity configuration issues during deployment and testing
 
 ## Notes
 This is a personal lab project built for learning and demonstration purposes. Free trials and evaluation images were used, and no production systems or real user data has been used.
+
+For full documentation, see the [lab writeup](./docs/writeup.md) and corresponding [scripts](./Scripts/)
