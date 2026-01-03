@@ -10,13 +10,13 @@ The environment consists of two virtual machines: a domain controller (DC01) hos
 Within Entra ID, MFA, Conditional Access and SAML-based SSO were implemented to control access to cloud resources. PowerShell scripts were also developed to automate identity-related tasks such as user provisioning and privileged role auditing, with selected scripts executed automatically via Windows Task Scheduler.
 
 A high-level architecture diagram is provided below to illustrate identity and authentication flows.
-![Architecture](docs/Images/Architecture.jpg)
+![Architecture](Images/Architecture.jpg)
 
 
 ## Identity Design & Lifecycle
-In this IAM environment, user identities are provisioned on-premises via an automated PowerShell user creation script [Create User](Scripts/Create%20User.ps1) and placed within a dedicated "Employees" Organisational Unit (OU) ([Active Directory Users](docs/Images/AD_Users.png)). Client devices are domain-joined to enforce centralised identity controls, group policies, and access to domain resources. 
+In this IAM environment, user identities are provisioned on-premises via an automated PowerShell user creation script [Create User](Scripts/Create%20User.ps1) and placed within a dedicated "Employees" Organisational Unit (OU) ([Active Directory Users](Images/AD_Users.png)). Client devices are domain-joined to enforce centralised identity controls, group policies, and access to domain resources. 
 
-Azure AD Connect is used to synchronise identities between the on-premises domain and the Entra ID tenant, with Password Hash Synchronisation (PHS) configured to enable cloud authentication. During implementation, password synchronisation initially failed due to the Entra sync service account lacking the "Replicating Directory Changes" and "Replicating Directory Changes All" permissions with Active Directory. Granting these permissions resolved the synchronisation issue and restored expected behaviour. Following successful Password Hash Synchronisation, synced users are visible within Entra ID ([Entra ID Users](docs/Images/Azure_Users.png)).
+Azure AD Connect is used to synchronise identities between the on-premises domain and the Entra ID tenant, with Password Hash Synchronisation (PHS) configured to enable cloud authentication. During implementation, password synchronisation initially failed due to the Entra sync service account lacking the "Replicating Directory Changes" and "Replicating Directory Changes All" permissions with Active Directory. Granting these permissions resolved the synchronisation issue and restored expected behaviour. Following successful Password Hash Synchronisation, synced users are visible within Entra ID ([Entra ID Users](Images/Azure_Users.png)).
 
 User lifecycle events such as departmental or role changes are handled through group membership updates, where users are removed from preliminary access groups (e.g., "G-DEPARTMENT All Users") and added to appropriate role-based groups. Once an account is no longer required, the user is removed from access groups (excluding the default "Domain Users"), disabled, and moved to a designated "Disabled Users" OU to maintain directory hygiene and prevent unauthorised access.
 
@@ -27,16 +27,16 @@ Conditional Access (CA) and Multi-Factor Authentication (MFA) were implemented t
 
 For testing purposes, a Conditional Access policy was created to evaluate access restrictions based on network trust and device platform. The policy aimed to block login attempts to Microsoft 365 services originating from untrusted networks, specifically targeting clients running Windows, macOS, iOS, or Android.
 
-All policies were initially deployed in Report-Only mode to validate behaviour and prevent administrative lockout. Successful MFA challenges were confirmed during SaaS authentication attempts ([MFA prompt](docs/Images/MFA_Prompt.png)). After reviewing sign-in logs and confirming expected results, the policies were enforced. Depending on the target resource, access could be further restricted by requiring device registration, additional authentication prompts, or tighter network conditions.
+All policies were initially deployed in Report-Only mode to validate behaviour and prevent administrative lockout. Successful MFA challenges were confirmed during SaaS authentication attempts ([MFA prompt](Images/MFA_Prompt.png)). After reviewing sign-in logs and confirming expected results, the policies were enforced. Depending on the target resource, access could be further restricted by requiring device registration, additional authentication prompts, or tighter network conditions.
 
 ### SSO Implementation
 SAML-based Single Sign-On (SSO) was implemented to demonstrate federated authentication for SaaS applications. For testing purposes, the "SAML ToolKit for Azure AD" enterprise application was configured to allow SSO access only to selected users.
 
-The application simplified configuration by providing required SAML metadata, including identifiers and reply URLs ([SSO Config](docs/Images/SSO_Config.png)). Authentication was tested using two users:
+The application simplified configuration by providing required SAML metadata, including identifiers and reply URLs ([SSO Config](Images/SSO_Config.png)). Authentication was tested using two users:
 - Alice, who was granted SSO access 
 - Joe, who was not assigned access to the application 
 
-Sign-in results confirmed successful authentication for authorised users and access denial for unauthorised users, validating correct assignment and enforcement ([Access Denied](docs/Images/SSO_Reject.png)).
+Sign-in results confirmed successful authentication for authorised users and access denial for unauthorised users, validating correct assignment and enforcement ([Access Denied](Images/SSO_Reject.png)).
 
 ### RBAC, Least Privilege and Group Policies
 To mirror an enterprise environment, network share folders were created on DC01 and made accessible to domain-joined clients. NTFS permissions were configured following the AGDLP model, with access assigned based on department group membership rather than individual users.
@@ -56,7 +56,7 @@ Automation was implemented to reduce manual administrative effort, improve consi
 - [Global Admin Audit](Scripts/Azure%20Global%20Admin%20Audit.ps1) - Continuously audits privileged Entra ID roles
 
 ### User Provisioning Automation
-The Create User script automates the creation of Active Directory user accounts while enforcing consistent naming standards and input validation. Usernames are generated using a structured format that ensures uniqueness, even for common surnames, while remaining compliant with the samAccountName 20-character limitation. The script also provides a GUI via Windows Forms and confirmation feedback ([user creation](docs/Images/User_Creation.png)). Key security-focused features include:
+The Create User script automates the creation of Active Directory user accounts while enforcing consistent naming standards and input validation. Usernames are generated using a structured format that ensures uniqueness, even for common surnames, while remaining compliant with the samAccountName 20-character limitation. The script also provides a GUI via Windows Forms and confirmation feedback ([user creation](Images/User_Creation.png)). Key security-focused features include:
 - Input validation to prevent malformed or unsafe account attributes
 - Automated random temporary password generation
 - Enforcement of consistent identity attributes at creation time
@@ -69,7 +69,7 @@ A second script was developed to audit membership of the "Global Administrator" 
 - Certificate-based authentication to Entra ID, eliminating interactive sign-ins
 - Enumeration of Global Administrator assignments
 - Identification of permanently assigned vs PIM-activated roles
-- Export of results to timestamped CSV files for review and tracking ([Audit Output](docs/Images/PS_Audit.png))
+- Export of results to timestamped CSV files for review and tracking ([Audit Output](Images/PS_Audit.png))
 
 To reduce manual oversight, the script was configured to run automatically every five minutes via a scheduled task. This provides near-real-time visibility into changes to privileged access and supports governance and approval workflows. This approach additionally aligns with least-privilege principles and demonstrates how automation can be used to continuously monitor high-risk identity roles.
 
